@@ -33,28 +33,28 @@ export class MonthlyPricesService {
     return createdCompany;
   }
 
-  async update(montlyPriceDto: MonthlyPricesUpdateDto, monthlyPricesId: number): Promise<MonthlyPrices> {
-
+  async update(montlyPriceDto: MonthlyPricesUpdateDto, monthlyPricesId: number): Promise<MonthlyPrices> {    
     const monthlyPriceReturn = await this.monthlyPricesRepository.findOne(monthlyPricesId);
-
+    
     if (!monthlyPriceReturn) {
-        throw new Error('Tabela de preço does not exists!');
+      throw new Error('Tabela de preço does not exists!');
+    }
+    
+    if (montlyPriceDto.description) {
+      monthlyPriceReturn.description = montlyPriceDto.description
+    }
+    
+    if (montlyPriceDto.name) {
+        monthlyPriceReturn.name = montlyPriceDto.name
     }
 
-    if (montlyPriceDto.descricao) {
-        monthlyPriceReturn.description = montlyPriceDto.descricao
-    }
-
-    if (montlyPriceDto.nome) {
-        monthlyPriceReturn.name = montlyPriceDto.nome
-    }
-
-    if (montlyPriceDto.valor) {
-        monthlyPriceReturn.price = parseFloat(montlyPriceDto.valor)
+    if (montlyPriceDto.price) {
+        monthlyPriceReturn.price = parseFloat(montlyPriceDto.price)
     }
 
     const updatedMonthlyPrice = await this.monthlyPricesRepository.save(monthlyPriceReturn);
-
+    console.log(montlyPriceDto);
+    
     return updatedMonthlyPrice;
   }
 
@@ -68,5 +68,15 @@ export class MonthlyPricesService {
     const monthlyPrices = await this.monthlyPricesRepository.find({where: {company}});
 
     return monthlyPrices;
+  }
+
+  async delete(monthlyPriceId: number): Promise<void>{
+    const monthlyPrices = await this.monthlyPricesRepository.find({where: {id: monthlyPriceId}});
+
+    if (!monthlyPrices) {
+      throw new Error(`Monthly price with id ${monthlyPriceId} does not exists!`);
+    }
+
+    await this.monthlyPricesRepository.delete(monthlyPriceId);
   }
 }

@@ -6,15 +6,15 @@ export class MonthlyPricesUpdateDto {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  valor: string;
+  price: string;
 
   @IsOptional()
   @ApiProperty()
   @IsString()
-  nome: string;
+  name: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  descricao: string;
+  description: string;
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -58,6 +59,15 @@ export class MonthlyPricesController {
     try {
       const monthlyPrices = await this.monthlyPricesService.get(companyId);
       return monthlyPrices;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Delete(':monthlyPriceId')
+  async delete(@Param('monthlyPriceId') monthlyPriceId: number): Promise<void> {
+    try {
+      await this.monthlyPricesService.delete(monthlyPriceId);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }

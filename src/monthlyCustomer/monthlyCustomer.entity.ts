@@ -2,6 +2,7 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     ManyToOne,
+    Column
   } from 'typeorm';
   import { ApiProperty } from '@nestjs/swagger';
   import { Company } from '../company/company.entity';
@@ -26,5 +27,9 @@ import { Customer } from 'src/customer/customer.entity';
       { eager: true }
     )
     customer: Customer;
+
+    @ApiProperty()
+    @Column({ length: 100, nullable: true })
+    plateAnonymousCustomer: string;
   }
   

@@ -53,7 +53,7 @@ export class UserCompanyService {
       const userCompany = new UserCompany();
       userCompany.user = createdUser;
       userCompany.company = createdCompany;
-      transaction.save<UserCompany>(userCompany);
+      await transaction.save<UserCompany>(userCompany);
     });
 
     return createdUser;

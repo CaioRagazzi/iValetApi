@@ -14,8 +14,6 @@ export class CompanyService {
   ) {}
 
   async create(company: CompanyInsertDto): Promise<InsertResult> {
-    const user = await this.userService.findOneById(company.user);
-
     const companyInst = new Company();
     companyInst.name = company.name;
 

@@ -20,6 +20,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Perfil } from '../perfil/perfil.entity';
 import { Customer } from '../customer/customer.entity';
 import { UserCompany } from 'src/userCompany/userCompany.entity';
+import { UserCustomer } from 'src/userCustomer/userCustomer.entity';
 
 @Entity()
 export class User {
@@ -59,13 +60,16 @@ export class User {
   updatedAt: Date;
 
   @OneToMany(
-    type => UserCompany,
+    () => UserCompany,
     userCompany => userCompany.user,
   )
   companies: UserCompany[];
 
+  @OneToOne(() => UserCustomer, userCustomer => userCustomer.customer)
+  customers: UserCustomer;
+
   @ManyToOne(
-    type => Perfil,
+    () => Perfil,
     perfil => perfil.user,
     { nullable: false, eager: true },
   )

@@ -10,6 +10,8 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../user/user.entity';
 import { MonthlyCustomer } from 'src/monthlyCustomer/monthlyCustomer.entity';
+import { UserCustomer } from 'src/userCustomer/userCustomer.entity';
+import { IsDate, IsNotEmpty } from 'class-validator';
   
   @Entity()
   @Unique(["placa"])
@@ -42,9 +44,17 @@ import { MonthlyCustomer } from 'src/monthlyCustomer/monthlyCustomer.entity';
     @Column({ length: 100, nullable: true })
     email: string;
 
-    @OneToOne(() => User)
-    @JoinColumn()
-    user: User;
+    @ApiProperty()
+    @IsDate()
+    @IsNotEmpty()
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
+    createdAt: Date;
+
+    @ApiProperty()
+    @IsDate()
+    @IsNotEmpty()
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
+    updatedAt: Date;
 
     @OneToMany(() => MonthlyCustomer, monthlyCustomer => monthlyCustomer.customer)
     monthlyCustomer: MonthlyCustomer[];

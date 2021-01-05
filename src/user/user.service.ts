@@ -39,7 +39,7 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async create(user: UserInsertDto): Promise<InsertResult> {
+  async create(user: UserInsertDto): Promise<InsertResult> {    
     const userInst = new User();
     userInst.email = user.email;
     userInst.name = user.name;

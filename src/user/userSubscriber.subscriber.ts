@@ -17,9 +17,9 @@ import {
       return User;
     }
 
-    afterInsert(event: InsertEvent<any>): void{
-        if (event.entity.perfil.id === 2) {
-          this.customerService.addCustomer(event.entity)
-        }
-    }
+    // afterInsert(event: InsertEvent<any>): void{
+    //     if (event.entity.perfil.id === 2) {
+    //       this.customerService.createCustomer(event.entity)
+    //     }
+    // }
   }

@@ -5,7 +5,6 @@ import {
   Index,
   OneToMany,
   ManyToOne,
-  OneToOne,
   JoinTable,
 } from 'typeorm';
 import {
@@ -15,10 +14,8 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { Company } from '../company/company.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Perfil } from '../perfil/perfil.entity';
-import { Customer } from '../customer/customer.entity';
 import { UserCompany } from 'src/userCompany/userCompany.entity';
 import { UserCustomer } from 'src/userCustomer/userCustomer.entity';
 
@@ -65,8 +62,8 @@ export class User {
   )
   companies: UserCompany[];
 
-  @OneToOne(() => UserCustomer, userCustomer => userCustomer.customer)
-  customers: UserCustomer;
+  @OneToMany(() => UserCustomer, userCustomer => userCustomer.user)
+  customers: UserCustomer[];
 
   @ManyToOne(
     () => Perfil,

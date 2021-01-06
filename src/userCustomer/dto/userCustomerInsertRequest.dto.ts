@@ -19,6 +19,10 @@ import {
     @IsEmail()
     @IsNotEmpty()
     email: string;
+
+    @IsNotEmpty()
+    @IsString()
+    plate: string;
   
     @IsNumber()
     @IsNotEmpty()

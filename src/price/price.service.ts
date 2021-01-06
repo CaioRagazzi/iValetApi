@@ -126,6 +126,10 @@ export class PriceService {
       .where('id = :priceId', { priceId })
       .getOne();
 
+      if (!result) {
+        throw new Error('Price does not exists!');
+      }
+
     return result;
   }
 

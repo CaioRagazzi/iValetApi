@@ -7,6 +7,7 @@ import {
   import { ApiProperty } from '@nestjs/swagger';
   import { Company } from '../company/company.entity';
 import { Customer } from 'src/customer/customer.entity';
+import { MonthlyPrices } from 'src/monthlyPrices/monthlyPrices.entity';
   
   @Entity()
   export class MonthlyCustomer {
@@ -27,6 +28,33 @@ import { Customer } from 'src/customer/customer.entity';
       { eager: true }
     )
     customer: Customer;
+
+    @ManyToOne(
+      () => MonthlyPrices,
+      monthlyPrices => monthlyPrices.id,
+      { eager: true }
+    )
+    price: MonthlyPrices;
+
+    @ApiProperty()
+    @Column({ length: 100, nullable: true })
+    nameAnonymousCustomer: string;
+
+    @ApiProperty()
+    @Column({ length: 100, nullable: true })
+    emailAnonymousCustomer: string;
+
+    @ApiProperty()
+    @Column({ length: 100, nullable: true })
+    telefoneAnonymousCustomer: string;
+
+    @ApiProperty()
+    @Column({ length: 100, nullable: true })
+    marcaAnonymousCustomer: string;
+
+    @ApiProperty()
+    @Column({ length: 100, nullable: true })
+    modeloAnonymousCustomer: string;
 
     @ApiProperty()
     @Column({ length: 100, nullable: true })

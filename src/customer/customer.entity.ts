@@ -56,6 +56,9 @@ import { IsDate, IsNotEmpty } from 'class-validator';
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     updatedAt: Date;
 
+    @OneToMany(() => UserCustomer, userCustomer => userCustomer.customer)
+    userCustomer: UserCustomer[];
+
     @OneToMany(() => MonthlyCustomer, monthlyCustomer => monthlyCustomer.customer)
     monthlyCustomer: MonthlyCustomer[];
 

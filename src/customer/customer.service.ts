@@ -17,4 +17,20 @@ export class CustomerService {
 
     return this.customerRepository.insert(customerInst);
     }
+
+    async findByPlate(plate: string): Promise<Customer>{
+      const customer = await this.customerRepository.findOne({ where: { placa: plate } })
+
+      return customer;
+    }
+
+    async findById(customerId: number): Promise<Customer>{
+      const customer = await this.customerRepository.findOne(customerId);
+
+      if (!customer) {
+        throw new Error(`Customer with id ${customerId} does not exists!`);
+      }
+
+      return customer;
+    }
 }

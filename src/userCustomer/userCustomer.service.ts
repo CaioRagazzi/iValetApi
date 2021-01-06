@@ -48,6 +48,8 @@ export class UserCustomerService {
       customer.name = userDto.name;
       customer.createdAt = new Date();
       customer.updatedAt = new Date();
+      customer.placa = userDto.plate;
+      customer.email = userDto.email;
       const createdCustomer = await transaction.save<Customer>(customer);
       createdUser = await transaction.save<User>(user);
       const userCustomer = new UserCustomer();

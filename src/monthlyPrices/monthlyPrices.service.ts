@@ -58,7 +58,7 @@ export class MonthlyPricesService {
     return updatedMonthlyPrice;
   }
 
-  async get(companyId: number): Promise<MonthlyPrices[]>{
+  async getByCompanyId(companyId: number): Promise<MonthlyPrices[]>{
     const company = await this.companyService.findOneById(companyId);
     
     if (!company) {
@@ -66,6 +66,12 @@ export class MonthlyPricesService {
     }
 
     const monthlyPrices = await this.monthlyPricesRepository.find({where: {company}});
+
+    return monthlyPrices;
+  }
+
+  async getById(monthlyPriceId: number): Promise<MonthlyPrices[]>{
+    const monthlyPrices = await this.monthlyPricesRepository.find({where: {id: monthlyPriceId}});
 
     return monthlyPrices;
   }

@@ -57,7 +57,7 @@ export class MonthlyPricesController {
   @Get(':companyId')
   async get(@Param('companyId') companyId: number): Promise<MonthlyPrices[]> {
     try {
-      const monthlyPrices = await this.monthlyPricesService.get(companyId);
+      const monthlyPrices = await this.monthlyPricesService.getByCompanyId(companyId);
       return monthlyPrices;
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);

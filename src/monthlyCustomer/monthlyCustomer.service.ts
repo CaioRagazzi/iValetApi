@@ -21,7 +21,15 @@ export class MonthlyCustomerService {
 
     async getByCompanyId(companyId: number): Promise<MonthlyCustomer[]>{
         const company = await this.companyService.findOneById(companyId);
+
         const monthlyCustomers = await this.monthlyCustomerRepository.find({ where: { company } })
+
+        return monthlyCustomers;
+    }
+
+    async GetByCompanyMonthlyCustomerPlate(companyId: number, monthlyCustomerPlate: string): Promise<MonthlyCustomer[]>{
+        const company = await this.companyService.findOneById(companyId);
+        const monthlyCustomers = await this.monthlyCustomerRepository.find({ where: { company, plateAnonymousCustomer:monthlyCustomerPlate } })
 
         return monthlyCustomers;
     }
@@ -30,13 +38,15 @@ export class MonthlyCustomerService {
         const monthlyCustomerToAdd = new MonthlyCustomer();
 
         const company = await this.companyService.findOneById(monthlyCustomer.companyId);
-        const price = await this.monthlyPriceService.get(monthlyCustomer.priceId);
+        
+        const price = await this.monthlyPriceService.getById(monthlyCustomer.priceId);
 
         monthlyCustomerToAdd.nameAnonymousCustomer = monthlyCustomer.name;
         monthlyCustomerToAdd.emailAnonymousCustomer = monthlyCustomer.email;
         monthlyCustomerToAdd.telefoneAnonymousCustomer = monthlyCustomer.telefone;
         monthlyCustomerToAdd.marcaAnonymousCustomer = monthlyCustomer.marca;
         monthlyCustomerToAdd.modeloAnonymousCustomer = monthlyCustomer.modelo;
+        monthlyCustomerToAdd.plateAnonymousCustomer = monthlyCustomer.placa;
         monthlyCustomerToAdd.company = company;
         monthlyCustomerToAdd.price = price[0];
 
@@ -49,7 +59,7 @@ export class MonthlyCustomerService {
         const monthlyCustomerToAdd = new MonthlyCustomer();
 
         const company = await this.companyService.findOneById(monthlyCustomerDto.companyId);
-        const price = await this.monthlyPriceService.get(monthlyCustomerDto.priceId);
+        const price = await this.monthlyPriceService.getById(monthlyCustomerDto.priceId);
         const customer = await this.customerService.findById(monthlyCustomerDto.customerId);
 
         monthlyCustomerToAdd.company = company;

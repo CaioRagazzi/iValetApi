@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda with nestjs.
+Resources:
+  LambdaNestJSFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/lambda-entry-point.handler
+      Runtime: nodejs12.x
+      CodeUri: s3://cloudformation-nestjs-ivalet/b230efd2ef7035569435edd02df7b39c
+      MemorySize: 256
+      Policies:
+      - AWSLambda_FullAccess
+      - AmazonSSMFullAccess
+      - AWSLambdaVPCAccessExecutionRole
+      Timeout: 60
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+Outputs:
+  LambdaSpringBootApi:
+    Description: URL for application
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+    Export:
+      Name: LambdaNestApi

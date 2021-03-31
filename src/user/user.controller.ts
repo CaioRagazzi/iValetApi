@@ -52,12 +52,14 @@ export class UserController {
         const userCompany = await this.userCompanyService.findOneByUserId(
           user.id,
         );
-        await Promise.all(userCompany.map(async usrComp => {          
-          const company = await this.companyService.findOneById(
-            +usrComp.company,
-          );
-          result.companies.push(company);
-        }));
+        await Promise.all(
+          userCompany.map(async usrComp => {
+            const company = await this.companyService.findOneById(
+              +usrComp.company,
+            );
+            result.companies.push(company);
+          }),
+        );
       }
 
       return result;

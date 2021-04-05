@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CompanyService } from '../company/company.service';
-import { ObjectLiteral, Repository } from 'typeorm';
+import { Equal, Like, ObjectLiteral, Repository } from 'typeorm';
 import { Caixa } from './caixa.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -73,5 +73,20 @@ export class CaixaService {
       .getOne();
 
     return caixa;
+  }
+
+  async getClosedCaixaByCompanyId(companyId: number, page: number): Promise<Caixa[]> {
+    await this.companyService.findOneById(companyId);
+
+    const caixas = await this.caixaRepository
+      .createQueryBuilder()
+      .where('closeDate is not null')
+      .andWhere('companyId = :companyId', { companyId })
+      .orderBy('closeDate', 'DESC')
+      .skip(page)
+      .take(10)
+      .getMany();
+
+    return caixas;
   }
 }
